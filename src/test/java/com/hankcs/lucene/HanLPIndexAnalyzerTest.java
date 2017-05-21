@@ -11,7 +11,8 @@ import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 public class HanLPIndexAnalyzerTest extends TestCase
 {
 
-    public void testCreateComponents() throws Exception
+    @SuppressWarnings("resource")
+	public void testCreateComponents() throws Exception
     {
         String text = "中华人民共和国很辽阔";
         for (int i = 0; i < text.length(); ++i)

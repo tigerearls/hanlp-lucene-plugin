@@ -10,7 +10,6 @@ import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -21,20 +20,18 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.util.Version;
 
-import java.io.File;
 import java.io.StringReader;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class HanLPAnalyzerTest extends TestCase
 {
 
-    public void testCreateComponents() throws Exception
+    @SuppressWarnings("resource")
+	public void testCreateComponents() throws Exception
     {
         String text = "中华人民共和国很辽阔";
         for (int i = 0; i < text.length(); ++i)
@@ -61,7 +58,7 @@ public class HanLPAnalyzerTest extends TestCase
     public void testIndexAndSearch() throws Exception
     {
         Analyzer analyzer = new HanLPAnalyzer();////////////////////////////////////////////////////
-        IndexWriterConfig config = new IndexWriterConfig(analyzer);
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_4_10_4, analyzer);
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         Directory directory = new RAMDirectory();
         IndexWriter indexWriter = new IndexWriter(directory, config);
@@ -100,10 +97,11 @@ public class HanLPAnalyzerTest extends TestCase
         args.put("enableTraditionalChineseMode", "true");
         args.put("enableNormalization", "true");
         HanLPTokenizerFactory factory = new HanLPTokenizerFactory(args);
-        Tokenizer tokenizer = factory.create();
         String text = "會辦台星保證最低價的原因？";
+        Tokenizer tokenizer = factory.create(new StringReader(text));
+       
 
-        tokenizer.setReader(new StringReader(text));
+        //tokenizer.setReader();
         tokenizer.reset();
         while (tokenizer.incrementToken())
         {

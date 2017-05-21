@@ -109,7 +109,8 @@ public class SegmentWrapper
         return true;
     }
 
-    private static Scanner createScanner(Reader reader)
+    @SuppressWarnings("resource")
+	private static Scanner createScanner(Reader reader)
     {
         return new Scanner(reader).useDelimiter("\n");
     }

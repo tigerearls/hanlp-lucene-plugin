@@ -24,6 +24,7 @@ import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.util.Version;
 
 import java.io.IOException;
 
@@ -54,7 +55,7 @@ public class HighLighterTest extends TestCase
             directory = new RAMDirectory();
 
             //配置IndexWriterConfig
-            IndexWriterConfig iwConfig = new IndexWriterConfig(analyzer);
+            IndexWriterConfig iwConfig = new IndexWriterConfig(Version.LUCENE_4_10_4, analyzer);
             iwConfig.setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
             iwriter = new IndexWriter(directory, iwConfig);
             {

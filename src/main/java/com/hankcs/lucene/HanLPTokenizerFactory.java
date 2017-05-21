@@ -2,7 +2,6 @@ package com.hankcs.lucene;
 
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.corpus.io.IOUtil;
-import com.hankcs.hanlp.dictionary.stopword.StopWordDictionary;
 import com.hankcs.hanlp.seg.Segment;
 import com.hankcs.hanlp.seg.common.Term;
 import com.hankcs.hanlp.tokenizer.TraditionalChineseTokenizer;
@@ -10,6 +9,7 @@ import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.util.TokenizerFactory;
 import org.apache.lucene.util.AttributeFactory;
 
+import java.io.Reader;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,7 +65,7 @@ public class HanLPTokenizerFactory extends TokenizerFactory
     }
 
     @Override
-    public Tokenizer create(AttributeFactory factory)
+    public Tokenizer create(AttributeFactory factory, Reader input)
     {
         Segment segment = HanLP.newSegment().enableOffset(true).enableIndexMode(enableIndexMode)
                 .enableNameRecognize(enableNameRecognize)
@@ -91,7 +91,9 @@ public class HanLPTokenizerFactory extends TokenizerFactory
             };
         }
 
-        return new HanLPTokenizer(segment
+        return new HanLPTokenizer(input,segment
                 , stopWordDictionary, enablePorterStemming);
     }
+
+
 }

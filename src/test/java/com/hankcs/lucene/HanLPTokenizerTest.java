@@ -1,8 +1,6 @@
 package com.hankcs.lucene;
 
 import com.hankcs.hanlp.HanLP;
-import com.hankcs.hanlp.seg.CRF.CRFSegment;
-import com.hankcs.hanlp.tokenizer.TraditionalChineseTokenizer;
 import junit.framework.TestCase;
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -19,10 +17,10 @@ public class HanLPTokenizerTest extends TestCase
     @Override
     public void setUp() throws Exception
     {
-        tokenizer = new HanLPTokenizer(HanLP.newSegment()
+        tokenizer = new HanLPTokenizer(new StringReader("林志玲亮相网友:确定不是波多野结衣？"),HanLP.newSegment()
                                                .enableJapaneseNameRecognize(true)
                                                .enableIndexMode(true), null, false);
-        tokenizer.setReader(new StringReader("林志玲亮相网友:确定不是波多野结衣？"));
+  
         tokenizer.reset();
     }
 

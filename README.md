@@ -1,6 +1,6 @@
 hanlp-lucene-plugin
 ========
-
+Adapter for spring-data-elasticsearch 1.3.6.RELEASE
 HanLP中文分词Lucene插件
 ----------------------
 基于HanLP，支持包括Solr在内的任何基于Lucene的系统。

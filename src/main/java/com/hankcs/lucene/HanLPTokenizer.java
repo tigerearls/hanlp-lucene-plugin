@@ -5,6 +5,8 @@ import com.hankcs.hanlp.collection.trie.bintrie.BinTrie;
 import com.hankcs.hanlp.corpus.tag.Nature;
 import com.hankcs.hanlp.seg.Segment;
 import com.hankcs.hanlp.seg.common.Term;
+import com.hankcs.hanlp.seg.common.wrapper.SegmentWrapper;
+
 import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
@@ -13,6 +15,7 @@ import org.apache.lucene.analysis.tokenattributes.TypeAttribute;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Set;
 
 /**
@@ -40,10 +43,11 @@ public class HanLPTokenizer extends Tokenizer
      * @param filter 停用词
      * @param enablePorterStemming 英文原型转换
      */
-    public HanLPTokenizer(Segment segment, Set<String> filter, boolean enablePorterStemming)
+
+    public HanLPTokenizer(Reader input,Segment segment, Set<String> filter, boolean enablePorterStemming)
     {
-        super();
-        this.segment = new SegmentWrapper(input, segment);
+        super(input);
+        this.segment = new SegmentWrapper(new BufferedReader(input), segment);
         if (filter != null && filter.size() > 0)
         {
             this.filter = new BinTrie<String>();
@@ -54,7 +58,6 @@ public class HanLPTokenizer extends Tokenizer
         }
         this.enablePorterStemming = enablePorterStemming;
     }
-
     @Override
     final public boolean incrementToken() throws IOException
     {

@@ -3,7 +3,7 @@ package com.hankcs.lucene;
 import com.hankcs.hanlp.HanLP;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Tokenizer;
-
+import java.io.Reader;
 import java.util.Set;
 
 public class HanLPIndexAnalyzer extends Analyzer
@@ -35,10 +35,11 @@ public class HanLPIndexAnalyzer extends Analyzer
         super();
     }
 
-    @Override
-    protected TokenStreamComponents createComponents(String fieldName)
-    {
-        Tokenizer tokenizer = new HanLPTokenizer(HanLP.newSegment().enableIndexMode(true), filter, pstemming);
-        return new TokenStreamComponents(tokenizer);
-    }
+
+
+	@Override
+	protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
+		 Tokenizer tokenizer = new HanLPTokenizer(reader,HanLP.newSegment().enableOffset(true), filter, pstemming);
+	      return new TokenStreamComponents(tokenizer);
+	}
 }
