@@ -5,7 +5,7 @@
 
 	<groupId>com.hankcs.nlp</groupId>
 	<artifactId>hanlp-lucene-plugin</artifactId>
-	<version>WinterSpring-1.0.0</version>
+	<version>WinterSpring-2.0.0</version>
 
 	<name>hanlp-solr-plugin</name>
 	<url>https://github.com/hankcs/hanlp-lucene-plugin</url>
